@@ -1,0 +1,32 @@
+{
+  "name": "@deepstream/types",
+  "version": "1.0.0-rc.3",
+  "description": "The types and enums used by plugins",
+  "main": "dist/index.js",
+  "scripts": {
+    "tsc": "rm -rf dist && tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/deepstreamIO/deepstream.io-types.git"
+  },
+  "keywords": [
+    "typescript",
+    "deepstream.io",
+    "plugin"
+  ],
+  "author": "deepstreamHub GmbH",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/deepstreamIO/deepstream.io-types/issues"
+  },
+  "homepage": "https://github.com/deepstreamIO/deepstream.io-types#readme",
+  "devDependencies": {
+    "ts-essentials": "^3.0.0",
+    "tslint": "^5.18.0",
+    "typescript": "^3.5.3"
+  },
+  "dependencies": {
+    "@deepstream/protobuf": "^1.0.0-rc.4"
+  }
+}
