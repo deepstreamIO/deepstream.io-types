@@ -20,6 +20,7 @@ export type MetaData = JSONObject
 
 export abstract class Handler<SpecificMessage> {
   public abstract handle (socketWrapper: SocketWrapper | null, message: SpecificMessage, originServerName: string): void
+  public setConnectionListener? (connectionListener: ConnectionListener): void
   public async close (): Promise<void> {}
 }
 
@@ -166,6 +167,7 @@ export abstract class DeepstreamPlugin {
   public async whenReady (): Promise<void> {}
   public init? (): void
   public async close (): Promise<void> {}
+  public setConnectionListener? (connectionListener: ConnectionListener): void
   public setRecordHandler? (recordHandler: any): void
 }
 
