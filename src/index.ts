@@ -247,10 +247,6 @@ export interface DeepstreamConfig {
   exitOnFatalError: boolean
 
   externalUrl: string | null
-  sslKey: string | null
-  sslCert: string | null
-  sslDHParams: string | null
-  sslPassphrase: string | null
 
   connectionEndpoints: PluginConfig[]
 
