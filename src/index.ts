@@ -18,8 +18,9 @@ interface MessageDistributor {
 
 export type MetaData = JSONObject
 
-export interface Handler<SpecificMessage> {
-  handle (socketWrapper: SocketWrapper | null, message: SpecificMessage): void
+export abstract class Handler<SpecificMessage> {
+  public abstract handle (socketWrapper: SocketWrapper | null, message: SpecificMessage, originServerName: string): void
+  public async close (): Promise<void> {}
 }
 
 export interface SimpleSocketWrapper {
@@ -159,6 +160,7 @@ export interface PluginConfig {
   options: any
 }
 
+// tslint:disable-next-line: max-classes-per-file
 export abstract class DeepstreamPlugin {
   public abstract description: string
   public async whenReady (): Promise<void> {}
