@@ -233,6 +233,7 @@ export type LockRegistryPlugin<PluginOptions = any> = new (pluginConfig: PluginO
 export interface ClusterRegistry extends DeepstreamPlugin {
   isLeader (): boolean
   getLeader (): string
+  getAll (): string[]
 }
 export type ClusterRegistryPlugin<PluginOptions = any> = new (pluginConfig: PluginOptions, services: DeepstreamServices, config: DeepstreamConfig) => ClusterRegistry
 
