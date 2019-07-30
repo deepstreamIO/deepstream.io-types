@@ -1,6 +1,6 @@
 {
   "name": "@deepstream/types",
-  "version": "1.0.0-rc.4",
+  "version": "1.0.0",
   "description": "The types and enums used by plugins",
   "main": "dist/index.js",
   "scripts": {
@@ -22,11 +22,11 @@
   },
   "homepage": "https://github.com/deepstreamIO/deepstream.io-types#readme",
   "devDependencies": {
-    "ts-essentials": "^3.0.0",
     "tslint": "^5.18.0",
     "typescript": "^3.5.3"
   },
   "dependencies": {
-    "@deepstream/protobuf": "^1.0.0-rc.4"
+    "@deepstream/protobuf": "^1.0.0-rc.4",
+    "ts-essentials": "^3.0.0"
   }
 }
