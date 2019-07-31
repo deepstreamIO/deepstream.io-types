@@ -24,7 +24,6 @@
   "devDependencies": {
     "tslint": "^5.18.0",
     "typescript": "^3.5.3",
-    "@deepstream/protobuf": "^1.0.0-rc.4",
-    "ts-essentials": "^3.0.0"
+    "@deepstream/protobuf": "^1.0.0"
   }
 }
