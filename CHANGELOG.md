@@ -1,3 +1,7 @@
+# [1.0.3] - 2019-08-09
+  
+Adding a metaObject for monitoring and logs
+
 # [1.0.2] - 2019-07-31
   
 Removing dependency on ts-essentials. Plugins that depend on this package now also
