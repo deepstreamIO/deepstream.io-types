@@ -24,8 +24,6 @@ interface MessageDistributor {
   registerForTopic (topic: TOPIC, callback: (message: Message, fromServer: string) => void): void
 }
 
-export type MetaData = JSONObject
-
 export abstract class Handler<SpecificMessage> {
   public abstract handle (socketWrapper: SocketWrapper | null, message: SpecificMessage, originServerName: string): void
   public setConnectionListener? (connectionListener: ConnectionListener): void
@@ -89,13 +87,21 @@ export interface SubscriptionListener {
   onFirstSubscriptionMade (name: string): void
 }
 
+export interface MetaData {
+  socketWrapper?: SocketWrapper | null,
+  message?: Message,
+  uuid?: string,
+  recordName?: string,
+  lockName?: string
+}
+
 export interface NamespacedLogger {
   shouldLog (logLevel: LOG_LEVEL): boolean
-  info (event: EVENT | string, message?: string, metaData?: any): void
-  debug (event: EVENT | string, message?: string, metaData?: any): void
-  warn (event: EVENT | string, message?: string, metaData?: any): void
-  error (event: EVENT | string, message?: string, metaData?: any): void
-  fatal (event: EVENT | string, message?: string, metaData?: any): void
+  info (event: EVENT | string, message?: string, metaData?: MetaData): void
+  debug (event: EVENT | string, message?: string, metaData?: MetaData): void
+  warn (event: EVENT | string, message: string, metaData?: MetaData): void
+  error (event: EVENT | string, message: string, metaData?: MetaData): void
+  fatal (event: EVENT | string, message: string, metaData?: MetaData): void
 }
 
 export interface DeepstreamLogger extends DeepstreamPlugin, NamespacedLogger {
@@ -139,6 +145,7 @@ export interface StateRegistry {
 
 export interface StateRegistryFactory extends DeepstreamPlugin {
   getStateRegistry (topic: TOPIC | STATE_REGISTRY_TOPIC): StateRegistry
+  getStateRegistries (): Map<TOPIC | STATE_REGISTRY_TOPIC, StateRegistry>
 }
 
 export interface SubscriptionRegistry {
@@ -197,7 +204,7 @@ export interface DeepstreamCache extends DeepstreamStorage  {
 }
 
 export interface DeepstreamMonitoring extends DeepstreamPlugin  {
-  onErrorLog (loglevel: LOG_LEVEL, event: EVENT, logMessage: string): void
+  onErrorLog (loglevel: LOG_LEVEL, event: EVENT, logMessage: string, metaData: MetaData): void
   onLogin (allowed: boolean, endpointType: string): void
   onMessageRecieved (message: Message): void
   onMessageSend (message: Message): void
@@ -335,8 +342,6 @@ export const enum EVENT {
   ERROR = 'ERROR',
   DEPRECATED = 'DEPRECATED',
 
-  FATAL_EXCEPTION = 'FATAL_EXCEPTION',
-  NOT_VALID_UUID = 'NOT_VALID_UUID',
   DEEPSTREAM_STATE_CHANGED = 'DEEPSTREAM_STATE_CHANGED',
   INCOMING_CONNECTION = 'INCOMING_CONNECTION',
   CLOSED_SOCKET_INTERACTION = 'CLOSED_SOCKET_INTERACTION',
@@ -345,11 +350,16 @@ export const enum EVENT {
   AUTH_ERROR = 'AUTH_ERROR',
   AUTH_RETRY_ATTEMPTS_EXCEEDED = 'AUTH_RETRY_ATTEMPTS_EXCEEDED',
 
+  FATAL_EXCEPTION = 'FATAL_EXCEPTION',
+  NOT_VALID_UUID = 'NOT_VALID_UUID',
+
   PLUGIN_ERROR = 'PLUGIN_ERROR',
   PLUGIN_INITIALIZATION_ERROR = 'PLUGIN_INITIALIZATION_ERROR',
   PLUGIN_INITIALIZATION_TIMEOUT = 'PLUGIN_INITIALIZATION_TIMEOUT',
 
-  TIMEOUT = 'TIMEOUT',
+  HTTP_REQUEST_TIMEOUT = 'HTTP_REQUEST_TIMEOUT',
+  LOCK_RELEASE_TIMEOUT = 'LOCK_RELEASE_TIMEOUT',
+  LOCK_REQUEST_TIMEOUT = 'LOCK_REQUEST_TIMEOUT',
 
   LEADING_LISTEN = 'LEADING_LISTEN',
   LOCAL_LISTEN = 'LOCAL_LISTEN',
