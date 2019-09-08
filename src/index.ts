@@ -299,6 +299,8 @@ export interface DeepstreamConfig {
     rematchInterval: number
     matchCooldown: number
   }
+
+  subscriptionsSanityTimer: number
 }
 
 export interface DeepstreamServices {
@@ -374,5 +376,7 @@ export const enum EVENT {
   CLUSTER_SIZE = 'CLUSTER_SIZE',
 
   UNSUPPORTED_ACTION = 'UNSUPPORTED_ACTION',
-  UNKNOWN_ACTION = 'UNKNOWN_ACTION'
+  UNKNOWN_ACTION = 'UNKNOWN_ACTION',
+
+  CLOSED_SOCKET = 'CLOSED_SOCKET'
 }
