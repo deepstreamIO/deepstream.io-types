@@ -299,8 +299,6 @@ export interface DeepstreamConfig {
     rematchInterval: number
     matchCooldown: number
   }
-
-  subscriptionsSanityTimer: number
 }
 
 export interface DeepstreamServices {
