@@ -281,7 +281,7 @@ export interface DeepstreamConfig {
   libDir: string | null
   logLevel: number
   serverName: string
-  dependencyInitialisationTimeout: number
+  dependencyInitializationTimeout: number
   exitOnFatalError: boolean
 
   externalUrl: string | null
