@@ -247,7 +247,9 @@ export type LockRegistryPlugin<PluginOptions = any> = new (pluginConfig: PluginO
 export interface ClusterRegistry extends DeepstreamPlugin {
   isLeader (): boolean
   getLeader (): string
-  getAll (): string[]
+  getAll (): string[],
+  onServerAdded: (callback: (serverName: string) => void) => void,
+  onServerRemoved: (callback: (serverName: string) => void) => void,
 }
 export type ClusterRegistryPlugin<PluginOptions = any> = new (pluginConfig: PluginOptions, services: DeepstreamServices, config: DeepstreamConfig) => ClusterRegistry
 
