@@ -104,6 +104,19 @@ export interface NamespacedLogger {
   fatal (event: EVENT | string, message: string, metaData?: MetaData): void
 }
 
+export interface DeepstreamHTTPMeta {
+  headers: string[]
+  url: string
+}
+export type DeepstreamHTTPResponse = () => void
+export type PostRequestHandler<DataInterface> = (data: DataInterface, meta: DeepstreamHTTPMeta, onResponse: DeepstreamHTTPResponse) => void
+export type GetRequestHandler = (meta: DeepstreamHTTPMeta, onResponse: DeepstreamHTTPResponse) => void
+
+export interface DeepstreamHTTPService extends DeepstreamPlugin {
+  registerPostPathPrefix: <DataInterface>(prefix: string, handler: PostRequestHandler<DataInterface>) => void
+  registerGetPathPrefix: (prefix: string, handler: GetRequestHandler) => void
+}
+
 export interface DeepstreamLogger extends DeepstreamPlugin, NamespacedLogger {
   shouldLog (logLevel: LOG_LEVEL): boolean
   setLogLevel (logLevel: LOG_LEVEL): void
@@ -305,6 +318,7 @@ export interface DeepstreamConfig {
 
 export interface DeepstreamServices {
   connectionEndpoints: DeepstreamConnectionEndpoint[]
+  httpService: DeepstreamHTTPService
   cache: DeepstreamCache
   storage: DeepstreamStorage
   monitoring: DeepstreamMonitoring
