@@ -1,5 +1,6 @@
 import { TOPIC, JSONObject, STATE_REGISTRY_TOPIC } from '@deepstream/protobuf/dist/types/all'
 import { Message, BulkSubscriptionMessage, SubscriptionMessage, ALL_ACTIONS } from '@deepstream/protobuf/dist/types/messages'
+import { Server as WebsocketServer } from 'ws'
 
 export declare type Primitive = string | number | boolean | bigint | symbol | undefined | null
 type DeepPartial<T> = T extends Primitive ? T : T extends Function ? T : T extends Date ? T : T extends Map<infer K, infer V> ? DeepPartialMap<K, V> : T extends Set<infer U> ? DeepPartialSet<U> : T extends {} ? {
@@ -108,13 +109,21 @@ export interface DeepstreamHTTPMeta {
   headers: string[]
   url: string
 }
-export type DeepstreamHTTPResponse = () => void
+export type DeepstreamHTTPResponse = (error: { statusCode: number, message: string } | null, data?: any) => void
 export type PostRequestHandler<DataInterface> = (data: DataInterface, meta: DeepstreamHTTPMeta, onResponse: DeepstreamHTTPResponse) => void
 export type GetRequestHandler = (meta: DeepstreamHTTPMeta, onResponse: DeepstreamHTTPResponse) => void
 
+
+export interface SocketHandshakeData {
+  remoteAddress: string
+  headers: string[],
+  referer: string
+}
+
 export interface DeepstreamHTTPService extends DeepstreamPlugin {
   registerPostPathPrefix: <DataInterface>(prefix: string, handler: PostRequestHandler<DataInterface>) => void
-  registerGetPathPrefix: (prefix: string, handler: GetRequestHandler) => void
+  registerGetPathPrefix: (prefix: string, handler: GetRequestHandler) => void,
+  registerWSUpgradePath: (path: string, websocketServer: WebsocketServer) => void
 }
 
 export interface DeepstreamLogger extends DeepstreamPlugin, NamespacedLogger {
@@ -290,7 +299,8 @@ export interface DeepstreamConfig {
   locks: PluginConfig
   clusterNode: PluginConfig
   clusterStates: PluginConfig
-  clusterRegistry: PluginConfig
+  clusterRegistry: PluginConfig,
+  httpServer: PluginConfig,
 
   plugins: { [index: string]: PluginConfig }
 
