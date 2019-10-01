@@ -113,7 +113,6 @@ export type DeepstreamHTTPResponse = (error: { statusCode: number, message: stri
 export type PostRequestHandler<DataInterface> = (data: DataInterface, meta: DeepstreamHTTPMeta, onResponse: DeepstreamHTTPResponse) => void
 export type GetRequestHandler = (meta: DeepstreamHTTPMeta, onResponse: DeepstreamHTTPResponse) => void
 
-
 export interface SocketHandshakeData {
   remoteAddress: string
   headers: string[],
@@ -228,7 +227,7 @@ export interface DeepstreamCache extends DeepstreamStorage  {
 export interface DeepstreamMonitoring extends DeepstreamPlugin  {
   onErrorLog (loglevel: LOG_LEVEL, event: EVENT, logMessage: string, metaData: MetaData): void
   onLogin (allowed: boolean, endpointType: string): void
-  onMessageRecieved (message: Message): void
+  onMessageReceived (message: Message): void
   onMessageSend (message: Message): void
   onBroadcast (message: Message, count: number): void
 }
