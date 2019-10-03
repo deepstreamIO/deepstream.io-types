@@ -235,19 +235,26 @@ export type MonitoringPlugin<PluginOptions = any> = new (pluginConfig: PluginOpt
 
 export type PermissionCallback = (socketWrapper: SocketWrapper, message: Message, passItOn: any, error: Error | string | ALL_ACTIONS | null, result: boolean) => void
 export interface DeepstreamPermission extends DeepstreamPlugin {
-  canPerformAction (username: string, message: Message, callback: PermissionCallback, authData: JSONObject, socketWrapper: SocketWrapper, passItOn: any): void
+  canPerformAction (socketWrapper: SocketWrapper, message: Message, callback: PermissionCallback, passItOn: any): void
 }
 
-export interface UserAuthData {
-  username?: string,
-  token?: string,
+export interface DeepstreamAuthenticationResult {
+  isValid: boolean,
+  id?: string,
   clientData?: JSONObject,
   serverData?: JSONObject
+  token?: string
 }
-export type UserAuthenticationCallback = (isValid: boolean, userAuthData?: UserAuthData) => void
-export interface DeepstreamAuthentication extends DeepstreamPlugin  {
+
+export type UserAuthenticationCallback = (isValid: boolean, userAuthData?: DeepstreamAuthenticationResult) => void
+export interface DeepstreamAuthenticationCombiner extends DeepstreamPlugin  {
   isValidUser (connectionData: any, authData: any, callback: UserAuthenticationCallback): void
-  onClientDisconnect? (username: string): void
+  onClientDisconnect? (user: string): void
+}
+
+export interface DeepstreamAuthentication extends DeepstreamPlugin  {
+  isValidUser (connectionData: any, authData: any): Promise<DeepstreamAuthenticationResult | null>
+  onClientDisconnect? (user: string): void
 }
 
 export interface DeepstreamClusterNode extends DeepstreamPlugin  {
@@ -290,7 +297,7 @@ export interface DeepstreamConfig {
 
   subscriptions: PluginConfig,
   logger: PluginConfig
-  auth: PluginConfig
+  auth: PluginConfig[]
   permission: PluginConfig
   cache: PluginConfig
   storage: PluginConfig
@@ -332,7 +339,7 @@ export interface DeepstreamServices {
   storage: DeepstreamStorage
   monitoring: DeepstreamMonitoring
   permission: DeepstreamPermission
-  authentication: DeepstreamAuthentication
+  authentication: DeepstreamAuthenticationCombiner
   logger: DeepstreamLogger
   clusterNode: DeepstreamClusterNode
   locks: DeepstreamLockRegistry,
