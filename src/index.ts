@@ -32,12 +32,13 @@ export abstract class Handler<SpecificMessage> {
 }
 
 export interface SimpleSocketWrapper {
-  user: string | null
+  userId: string | null
+  clientData: object | null
+  serverData: object | null
   isRemote?: boolean
   sendMessage (message: Message, buffer?: boolean): void
   sendAckMessage (message: Message, buffer?: boolean): void
   sendBuiltMessage? (message: any, buffer?: boolean): void
-  clientData?: object | null
 }
 
 export interface StatefulSocketWrapper extends SimpleSocketWrapper {
@@ -60,8 +61,8 @@ export interface UnauthenticatedSocketWrapper extends StatefulSocketWrapper {
 }
 
 export interface SocketWrapper extends UnauthenticatedSocketWrapper {
-  user: string
-  authData: JSONObject | null,
+  userId: string
+  serverData: JSONObject | null,
   clientData: JSONObject | null
 }
 
