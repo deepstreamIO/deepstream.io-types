@@ -322,6 +322,14 @@ export interface DeepstreamConfig {
 
   plugins: { [index: string]: PluginConfig }
 
+  enabledFeatures: {
+    record: boolean,
+    event: boolean,
+    rpc: boolean,
+    presence: boolean,
+    monitoring: boolean
+  },
+
   record: {
     storageHotPathPrefixes: string[]
     storageExclusionPrefixes: string[]
