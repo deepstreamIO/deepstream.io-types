@@ -1,6 +1,6 @@
 import { TOPIC, JSONObject, STATE_REGISTRY_TOPIC } from '@deepstream/protobuf/dist/types/all'
 import { Message, BulkSubscriptionMessage, SubscriptionMessage, ALL_ACTIONS } from '@deepstream/protobuf/dist/types/messages'
-import { Server as WebsocketServer } from 'ws'
+import { ParseResult } from '../../src/constants'
 
 export declare type Primitive = string | number | boolean | bigint | symbol | undefined | null
 type DeepPartial<T> = T extends Primitive ? T : T extends Function ? T : T extends Date ? T : T extends Map<infer K, infer V> ? DeepPartialMap<K, V> : T extends Set<infer U> ? DeepPartialSet<U> : T extends {} ? {
@@ -36,6 +36,7 @@ export interface SimpleSocketWrapper {
   clientData: object | null
   serverData: object | null
   isRemote?: boolean
+  parseMessage (serializedMessage: any): ParseResult[]
   sendMessage (message: Message, buffer?: boolean): void
   sendAckMessage (message: Message, buffer?: boolean): void
   sendBuiltMessage? (message: any, buffer?: boolean): void
@@ -120,10 +121,18 @@ export interface SocketHandshakeData {
   referer: string
 }
 
+export interface WebSocketConnectionEndpoint {
+  wsOptions: { [index: string]: any },
+  onConnection: (socketWrapper: UnauthenticatedSocketWrapper) => void,
+  onSocketClose: (socketWrapper: UnauthenticatedSocketWrapper) => void,
+}
+
+export type SocketWrapperFactory = Function
+
 export interface DeepstreamHTTPService extends DeepstreamPlugin {
   registerPostPathPrefix: <DataInterface>(prefix: string, handler: PostRequestHandler<DataInterface>) => void
   registerGetPathPrefix: (prefix: string, handler: GetRequestHandler) => void,
-  registerWSUpgradePath: (path: string, websocketServer: WebsocketServer) => void
+  registerWebsocketEndpoint: (path: string, createSocketWrapper: SocketWrapperFactory, webSocketConnectionEndpointPlugin: WebSocketConnectionEndpoint) => void
 }
 
 export interface DeepstreamLogger extends DeepstreamPlugin, NamespacedLogger {
