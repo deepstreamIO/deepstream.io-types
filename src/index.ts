@@ -1,6 +1,7 @@
 import { TOPIC, JSONObject, STATE_REGISTRY_TOPIC } from '@deepstream/protobuf/dist/types/all'
 import { Message, BulkSubscriptionMessage, SubscriptionMessage, ALL_ACTIONS } from '@deepstream/protobuf/dist/types/messages'
 import { ParseResult } from '../../src/constants'
+import { Dictionary } from 'ts-essentials'
 
 export declare type Primitive = string | number | boolean | bigint | symbol | undefined | null
 type DeepPartial<T> = T extends Primitive ? T : T extends Function ? T : T extends Date ? T : T extends Map<infer K, infer V> ? DeepPartialMap<K, V> : T extends Set<infer U> ? DeepPartialSet<U> : T extends {} ? {
@@ -108,7 +109,7 @@ export interface NamespacedLogger {
 }
 
 export interface DeepstreamHTTPMeta {
-  headers: string[]
+  headers: Dictionary<string>
   url: string
 }
 export type DeepstreamHTTPResponse = (error: { statusCode: number, message: string } | null, data?: any) => void
@@ -133,6 +134,7 @@ export interface DeepstreamHTTPService extends DeepstreamPlugin {
   registerPostPathPrefix: <DataInterface>(prefix: string, handler: PostRequestHandler<DataInterface>) => void
   registerGetPathPrefix: (prefix: string, handler: GetRequestHandler) => void,
   registerWebsocketEndpoint: (path: string, createSocketWrapper: SocketWrapperFactory, webSocketConnectionEndpointPlugin: WebSocketConnectionEndpoint) => void
+  sendWebsocketMessage: (socket: any, message: any, isBinary: boolean) => void
 }
 
 export interface DeepstreamLogger extends DeepstreamPlugin, NamespacedLogger {
