@@ -135,6 +135,7 @@ export interface DeepstreamHTTPService extends DeepstreamPlugin {
   registerGetPathPrefix: (prefix: string, handler: GetRequestHandler) => void,
   registerWebsocketEndpoint: (path: string, createSocketWrapper: SocketWrapperFactory, webSocketConnectionEndpointPlugin: WebSocketConnectionEndpoint) => void
   sendWebsocketMessage: (socket: any, message: any, isBinary: boolean) => void
+  getSocketWrappersForUserId (userId: string): SocketWrapper[]
 }
 
 export interface DeepstreamLogger extends DeepstreamPlugin, NamespacedLogger {
