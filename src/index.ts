@@ -1,6 +1,5 @@
 import { TOPIC, JSONObject, STATE_REGISTRY_TOPIC } from '@deepstream/protobuf/dist/types/all'
-import { Message, BulkSubscriptionMessage, SubscriptionMessage, ALL_ACTIONS } from '@deepstream/protobuf/dist/types/messages'
-import { ParseResult } from '../../src/constants'
+import { Message, BulkSubscriptionMessage, SubscriptionMessage, ALL_ACTIONS, ParseResult } from '@deepstream/protobuf/dist/types/messages'
 import { Dictionary } from 'ts-essentials'
 
 export declare type Primitive = string | number | boolean | bigint | symbol | undefined | null

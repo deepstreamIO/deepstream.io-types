@@ -1,3 +1,8 @@
+# [2.0.2] - 2019-10-10
+# [2.0.1] - 2019-10-10
+
+Fixing publish issue due to a greedy import
+
 # [2.0.0] - 2019-10-10
   
 Changing recieved to received
