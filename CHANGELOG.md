@@ -1,3 +1,10 @@
+# [2.0.0] - 2019-10-10
+  
+Changing recieved to received
+
+Changing permission callback to be much less verbose
+Changing auth callback to return an object instead of a callback to allow multiple endpoints
+
 # [1.0.3] - 2019-08-09
   
 Adding a metaObject for monitoring and logs
