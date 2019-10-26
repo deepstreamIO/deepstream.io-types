@@ -371,10 +371,12 @@ export interface DeepstreamServices {
   notifyFatalException: () => void
 }
 
+export type ConfigSchema = Dictionary<Dictionary<boolean | string>>
+export type ValveSchema = Dictionary<ConfigSchema>
 export interface ValveConfig {
   cacheEvacuationInterval: number
   maxRuleIterations: number
-  path: string
+  permissions: ValveSchema
 }
 
 export interface Provider {
@@ -405,6 +407,9 @@ export const enum EVENT {
 
   FATAL_EXCEPTION = 'FATAL_EXCEPTION',
   NOT_VALID_UUID = 'NOT_VALID_UUID',
+
+  CONFIG_TRANSFORM = 'CONFIG_TRANSFORM',
+  CONFIG_ERROR = 'CONFIG_ERROR',
 
   PLUGIN_ERROR = 'PLUGIN_ERROR',
   PLUGIN_INITIALIZATION_ERROR = 'PLUGIN_INITIALIZATION_ERROR',
