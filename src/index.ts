@@ -391,7 +391,7 @@ export interface UserData {
   serverData: any
 }
 
-export const enum EVENT {
+export enum EVENT {
   INFO = 'INFO',
   ERROR = 'ERROR',
   DEPRECATED = 'DEPRECATED',
