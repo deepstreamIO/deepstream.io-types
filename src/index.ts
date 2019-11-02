@@ -1,6 +1,5 @@
 import { TOPIC, JSONObject, STATE_REGISTRY_TOPIC } from '@deepstream/protobuf/dist/types/all'
 import { Message, BulkSubscriptionMessage, SubscriptionMessage, ALL_ACTIONS, ParseResult } from '@deepstream/protobuf/dist/types/messages'
-import { Dictionary } from 'ts-essentials'
 
 export declare type Primitive = string | number | boolean | bigint | symbol | undefined | null
 type DeepPartial<T> = T extends Primitive ? T : T extends Function ? T : T extends Date ? T : T extends Map<infer K, infer V> ? DeepPartialMap<K, V> : T extends Set<infer U> ? DeepPartialSet<U> : T extends {} ? {
@@ -108,7 +107,7 @@ export interface NamespacedLogger {
 }
 
 export interface DeepstreamHTTPMeta {
-  headers: Dictionary<string>
+  headers: { [index: string]: string }
   url: string
 }
 export type DeepstreamHTTPResponse = (error: { statusCode: number, message: string } | null, data?: any) => void
@@ -371,8 +370,8 @@ export interface DeepstreamServices {
   notifyFatalException: () => void
 }
 
-export type ConfigSchema = Dictionary<Dictionary<boolean | string>>
-export type ValveSchema = Dictionary<ConfigSchema>
+export type ConfigSchema = { [index: string] : { [index: string]: boolean | string }}
+export type ValveSchema = { [index: string]: ConfigSchema }
 export interface ValveConfig {
   cacheEvacuationInterval: number
   maxRuleIterations: number
