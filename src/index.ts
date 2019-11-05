@@ -94,7 +94,8 @@ export interface MetaData {
   message?: Message,
   uuid?: string,
   recordName?: string,
-  lockName?: string
+  lockName?: string,
+  [index: string]: any
 }
 
 export interface NamespacedLogger {
