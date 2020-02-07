@@ -1,6 +1,6 @@
 {
   "name": "@deepstream/types",
-  "version": "2.0.7",
+  "version": "2.0.8",
   "description": "The types and enums used by plugins",
   "main": "dist/index.js",
   "scripts": {
