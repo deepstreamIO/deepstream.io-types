@@ -261,7 +261,7 @@ export interface DeepstreamAuthenticationResult {
 export type UserAuthenticationCallback = (isValid: boolean, userAuthData?: DeepstreamAuthenticationResult) => void
 export interface DeepstreamAuthenticationCombiner extends DeepstreamPlugin  {
   isValidUser (connectionData: any, authData: any, callback: UserAuthenticationCallback): void
-  onClientDisconnect? (user: string): void
+  onClientDisconnect (user: string): void
 }
 
 export interface DeepstreamAuthentication extends DeepstreamPlugin  {
