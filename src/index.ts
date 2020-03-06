@@ -31,6 +31,7 @@ export abstract class Handler<SpecificMessage> {
 }
 
 export interface SimpleSocketWrapper {
+  socketType: string
   userId: string | null
   clientData: object | null
   serverData: object | null
