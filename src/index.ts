@@ -240,7 +240,7 @@ export interface DeepstreamCache extends DeepstreamStorage  {
 export interface DeepstreamMonitoring extends DeepstreamPlugin  {
   onErrorLog (loglevel: LOG_LEVEL, event: EVENT, logMessage: string, metaData: MetaData): void
   onLogin (allowed: boolean, endpointType: string): void
-  onMessageReceived (message: Message): void
+  onMessageReceived (message: Message, socketUserData: JSONObject): void
   onMessageSend (message: Message): void
   onBroadcast (message: Message, count: number): void
 }
