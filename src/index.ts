@@ -237,10 +237,15 @@ export interface DeepstreamCache extends DeepstreamStorage  {
   headBulk (recordNames: string[], callback: StorageHeadBulkCallback): void
 }
 
+export interface SocketUserData {
+  userId: string,
+  serverData: JSONObject | null
+}
+
 export interface DeepstreamMonitoring extends DeepstreamPlugin  {
   onErrorLog (loglevel: LOG_LEVEL, event: EVENT, logMessage: string, metaData: MetaData): void
   onLogin (allowed: boolean, endpointType: string): void
-  onMessageReceived (message: Message, socketUserData: JSONObject): void
+  onMessageReceived (message: Message, socketUserData: SocketUserData): void
   onMessageSend (message: Message): void
   onBroadcast (message: Message, count: number): void
 }
