@@ -153,6 +153,7 @@ export interface ConnectionListener {
   onClientDisconnected (socketWrapper: SocketWrapper): void
 }
 export interface DeepstreamConnectionEndpoint extends DeepstreamPlugin {
+  getClientVersions (): { [index: string]: Set<string> }
   onMessages (socketWrapper: SocketWrapper, messages: Message[]): void
   scheduleFlush? (socketWrapper: SocketWrapper): void,
   setConnectionListener? (connectionListener: ConnectionListener): void
@@ -249,6 +250,11 @@ export interface DeepstreamMonitoring extends DeepstreamPlugin  {
 }
 export type MonitoringPlugin<PluginOptions = any> = new (pluginConfig: PluginOptions, services: DeepstreamServices, config: DeepstreamConfig) => DeepstreamMonitoring
 
+export interface DeepstreamTelemetry extends DeepstreamPlugin {
+}
+export type TelemetryPlugin<PluginOptions = any> = new (pluginConfig: PluginOptions, services: DeepstreamServices, config: DeepstreamConfig) => DeepstreamTelemetry
+
+
 export type PermissionCallback = (socketWrapper: SocketWrapper, message: Message, passItOn: any, error: Error | string | ALL_ACTIONS | null, result: boolean) => void
 export interface DeepstreamPermission extends DeepstreamPlugin {
   canPerformAction (socketWrapper: SocketWrapper, message: Message, callback: PermissionCallback, passItOn: any): void
@@ -318,6 +324,7 @@ export interface DeepstreamConfig {
   cache: PluginConfig
   storage: PluginConfig
   monitoring: PluginConfig
+  telemetry: PluginConfig
   locks: PluginConfig
   clusterNode: PluginConfig
   clusterStates: PluginConfig
@@ -366,11 +373,12 @@ export interface DeepstreamServices {
   authentication: DeepstreamAuthenticationCombiner
   logger: DeepstreamLogger
   clusterNode: DeepstreamClusterNode
-  locks: DeepstreamLockRegistry,
-  clusterRegistry: ClusterRegistry,
-  subscriptions: SubscriptionRegistryFactory,
-  clusterStates: StateRegistryFactory,
-  messageDistributor: MessageDistributor,
+  locks: DeepstreamLockRegistry
+  clusterRegistry: ClusterRegistry
+  subscriptions: SubscriptionRegistryFactory
+  clusterStates: StateRegistryFactory
+  messageDistributor: MessageDistributor
+  telemetry: DeepstreamTelemetry
   plugins: { [index: string]: DeepstreamPlugin },
   notifyFatalException: () => void
 }
@@ -438,5 +446,8 @@ export enum EVENT {
   UNSUPPORTED_ACTION = 'UNSUPPORTED_ACTION',
   UNKNOWN_ACTION = 'UNKNOWN_ACTION',
 
-  CLOSED_SOCKET = 'CLOSED_SOCKET'
+  CLOSED_SOCKET = 'CLOSED_SOCKET',
+
+  TELEMETRY_DEBUG = "TELEMETRY_DEBUG",
+  TELEMETRY_UNREACHABLE = "TELEMETRY_UNREACHABLE"
 }
