@@ -1,9 +1,13 @@
-# [2.2.0] - 2020-05-27  
+# [2.3.0] - 2022-05-30
+
+Remove externalUrl
+
+# [2.2.0] - 2020-05-27
 
 Adding telemetry options
 
 
-# [2.1.0] - 2020-04-27  
+# [2.1.0] - 2020-04-27
 
 onMessageReceived method at DeepstreamMonitoring interface receives socket user data ({ userId, serverData, clientData }) as second param in callback
 
