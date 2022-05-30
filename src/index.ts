@@ -313,8 +313,6 @@ export interface DeepstreamConfig {
   dependencyInitializationTimeout: number
   exitOnFatalError: boolean
 
-  externalUrl: string | null
-
   connectionEndpoints: PluginConfig[]
 
   subscriptions: PluginConfig,
