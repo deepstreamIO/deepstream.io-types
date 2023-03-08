@@ -1,3 +1,8 @@
+# [2.3.1] - 2023-03-08
+
+- monitoring as array of plugins
+- update deps
+
 # [2.3.0] - 2022-05-30
 
 Remove externalUrl
