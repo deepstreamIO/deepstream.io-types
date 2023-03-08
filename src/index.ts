@@ -312,25 +312,21 @@ export interface DeepstreamConfig {
   serverName: string
   dependencyInitializationTimeout: number
   exitOnFatalError: boolean
-
   connectionEndpoints: PluginConfig[]
-
   subscriptions: PluginConfig,
   logger: PluginConfig
   auth: PluginConfig[]
   permission: PluginConfig
   cache: PluginConfig
   storage: PluginConfig
-  monitoring: PluginConfig
+  monitoring: PluginConfig | PluginConfig[]
   telemetry: PluginConfig
   locks: PluginConfig
   clusterNode: PluginConfig
   clusterStates: PluginConfig
   clusterRegistry: PluginConfig,
   httpServer: PluginConfig,
-
   plugins: { [index: string]: PluginConfig }
-
   enabledFeatures: {
     record: boolean,
     event: boolean,
