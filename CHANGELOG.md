@@ -1,3 +1,8 @@
+# [2.3.2] - 2023-03-08
+
+- prepack!
+- update deps
+
 # [2.3.1] - 2023-03-08
 
 - monitoring as array of plugins
